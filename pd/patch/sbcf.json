@@ -1,0 +1,36 @@
+{
+  "log": {
+    "level": "info"
+  },
+  "inbounds": [
+    {
+      "type": "socks",
+      "listen": "127.0.0.1",
+      "listen_port": 7888
+    },
+    {
+          "type": "http",
+          "listen": "127.0.0.1",
+          "listen_port": 8888
+    },
+    
+  ],
+  "outbounds": [
+    {
+      "type": "direct"
+    }
+  ],
+  "dns": {
+    "servers": [
+      { 
+        "type":"https",
+        "server": "8.8.8.8"
+      },
+      { 
+        "type":"https",
+        "server": "1.1.1.1" 
+      }
+      
+    ]
+  }
+}
