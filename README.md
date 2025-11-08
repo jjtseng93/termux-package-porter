@@ -26,6 +26,8 @@
 - Get package_name by X-plore or simply sharing app by link in Play Store
 - Then you can either 
 1. unzip this whole folder to /data/data/package_name and then rename tmpk to no_backup
+  (due to these folders being too large, if you want to use this method,
+  unzip them manually: lxt  micro  nd  qarm  qemu-img)
   ```shell
   cd /data/data/package_name
   unzip /sdcard/Android/media/package_name/tmpk.zip
