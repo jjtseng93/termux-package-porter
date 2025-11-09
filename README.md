@@ -24,10 +24,24 @@
   ```
 # Usage
 - Get package_name by X-plore or simply sharing app by link in Play Store
+- I'v made the assumption in the following script that you have this project's root folder named tmpk and zipped the folder as tmpk.zip
+- It can be achieved manually or in Termux by either
+   ```shell
+   git clone https://github.com/jjtseng93/termux-package-porter.git
+   mv termux-package-porter tmpk
+   zip -r tmpk.zip tmpk
+   ```
+- or get the zip by Code->Download Zip and
+  ```shell
+  unzip /sdcard/Download/termux-package-porter-main.zip
+  mv termux-package-porter-main tmpk
+  zip -r tmpk.zip tmpk
+  ``` 
 - Then you can either 
 1. unzip this whole folder to /data/data/package_name and then rename tmpk to no_backup
   (due to these folders being too large, if you want to use this method,
   unzip them manually: lxt  micro  nd  qarm  qemu-img)
+- *** this method is currently unstable: it requires you to also unzip the files to media_dir ***
   ```shell
   cd /data/data/package_name
   unzip /sdcard/Android/media/package_name/tmpk.zip
