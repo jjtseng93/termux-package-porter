@@ -9,6 +9,19 @@ scriptdir=$(dirname $(realpath "$0"))
 # These 2 for both Termux and Guest app
 if ! [ -z $PKG_NAME ] ; then
   package="$PKG_NAME"
+elif echo $scriptdir | grep 'Android/media' ; then
+  package=$(echo $scriptdir | grep -o -E 'Android/media/[^/]+' | grep -o -E '[^/]+' | sed -n '3p')
+
+elif echo $scriptdir | grep -E '^/data/data/' ; then
+  package=$(echo $scriptdir | grep -o -E 'data/data/[^/]+' | grep -o -E '[^/]+' | sed -n '3p')
+
+  PKG_PDIR=$(echo $scriptdir | grep -o -E '^/data/data/[^/]+')
+  
+elif echo $scriptdir | grep -E '^/data/user/' ; then
+  package=$(echo $scriptdir | grep -o -E 'data/user/[^/]+/[^/]+' | grep -o -E '[^/]+' | sed -n '4p')
+
+  PKG_PDIR=$(echo $scriptdir | grep -o -E '^/data/user/[^/]+/[^/]+')
+
 elif [ -f $scriptdir/pkg_name.txt  ] ; then
   package=$(cat $scriptdir/pkg_name.txt)
 # These for the Guest app 
@@ -25,5 +38,5 @@ fi
 #  package="com.smartphoneremote.androidscriptfree"
 #fi
 if ! [ -z $1 ] ; then
-  echo $package
+  echo "Package name: $package"
 fi

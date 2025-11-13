@@ -13,7 +13,12 @@ scriptdir=$(dirname $(realpath "$0"))
 export PKG_NAME="$package"
 export PKG_MDIR="/sdcard/Android/media/$package"
 export PKG_DDIR="/sdcard/Android/data/$package"
-export PKG_PDIR="/data/data/$package"
+
+if [ -z "$PKG_PDIR" ] ; then
+  export PKG_PDIR="/data/data/$package"
+else
+  export PKG_PDIR="$PKG_PDIR"
+fi
 
 if [ -z "$HOME" ] ; then
   export HOME="$PKG_PDIR/no_backup"
@@ -23,15 +28,32 @@ if [ -z "$TMPDIR" ] ; then
   export TMPDIR="$PKG_PDIR/cache"
 fi
 
+export PKG_RDIR="$PKG_PDIR/no_backup"
+
+export shr="$PKG_PDIR/no_backup/r"
+
+if ! echo $HOME | grep no_backup ; then
+  export OPENSSL_CONF=/dev/null
+fi
 
 
-echo "This package is $package"
+mkdir $PKG_PDIR/no_backup 2>/dev/null
 
-mkdir /data/data/$package/no_backup 2>/dev/null
+chmod 777 $PKG_PDIR/no_backup
 
-chmod 777 /data/data/$package/no_backup
+cd $PKG_PDIR/no_backup
 
-cd /data/data/$package/no_backup
+
+if ! [ -f "$HOME/.bashrc" ] ; then
+  echo alias run="\"sh $PKG_PDIR/no_backup/r\"">"$HOME/.bashrc"
+elif ! cat "$HOME/.bashrc" | grep 'alias run=' ; then
+  echo "">>"$HOME/.bashrc"
+  echo alias run="\"sh $PKG_PDIR/no_backup/r\"">>"$HOME/.bashrc"
+fi
+
+export ENV="$HOME/.bashrc"
+export TERM=xterm-256color
+
 
 if ! [ -f r ] ; then
 cp "/sdcard/Android/media/$package/r" . \
@@ -50,8 +72,11 @@ if ! [ -f pkg_name.txt ] ; then
 fi
 
 if ! [ -d "$1" ] ; then 
-  if ls /sdcard ; then
-    unzip $(printf "/sdcard/Android/media/$package/%s.zip" "$1")
+  zp=$(printf "/sdcard/Android/media/$package/%s.zip" "$1")
+  if [ -f "$zp" ] ; then
+    unzip "$zp"
+  elif [ -f "$1.zip" ] ; then
+    unzip "$1.zip"
   elif [ -f /tmp/mdir.tar ] ; then
     sh /tmp/tarcp.sh /tmp/mdir.tar $(printf "%s.zip" "$1") .
   elif [ -f /data/local/tmp/d.tar ] ; then
@@ -62,7 +87,7 @@ fi
 cd -
 
 if [ -z "$comesfromr" ] ; then
-  cd "/data/data/$package/no_backup/$1"
+  cd "$PKG_PDIR/no_backup/$1"
 fi
 
 if [ -z "$DISPLAY" ] ; then
@@ -71,7 +96,7 @@ fi
 
 fdn="$1"
 
-if [ -f /data/data/$package/no_backup/$fdn/$fdn ] ; then
+if [ -f $PKG_PDIR/no_backup/$fdn/$fdn ] ; then
   elfn="$1"
 else
   elfn="$2"
@@ -89,11 +114,11 @@ if ! [ -z "$TMPK_QUIET" ] ; then
   exec > /dev/tty 2>&1
 fi
 
-runpath="/data/data/$package/no_backup/$fdn/$elfn"
+runpath="$PKG_PDIR/no_backup/$fdn/$elfn"
 
 if file -b "$runpath" | grep -q "script" ; then
   sh "$runpath" "$@"
 else
-  export LD_LIBRARY_PATH="/data/data/$package/no_backup/$fdn"
+  export LD_LIBRARY_PATH="$PKG_PDIR/no_backup/$fdn"
   /system/bin/linker64 "$runpath" "$@"
 fi

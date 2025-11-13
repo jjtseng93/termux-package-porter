@@ -1,5 +1,12 @@
 # Termux-Package-Porter
 - Ports termux packages to other Android shells by libtree and zip
+# Update Note 
+## 2025/11/13(latest)
+- I've made a new tmpk_firstrun.sh to fit all needs
+- now just copy your tmpk.zip and tmpk_firstrun.sh to any same folder(/data/data/pkn /sdcard/Android/media/pkn Termux $HOME)
+- sh /path/to/tmpk_firstrun.sh
+- It will handle the initial setup process for you
+- The folder structure of tmpk.zip also doesn't matter anymore; it can be pure root or within subfolders, I use gruntm.sh to locate how many layers of folders to extract
 # Introduction
 - This is a Termux binary packaging tool
 - It ports Termux native binaries into the native Android shell
