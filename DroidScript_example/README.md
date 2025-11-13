@@ -10,7 +10,7 @@
   tar -cvf DroidScript_example.tar DroidScript_example
   ```
 - insert this script to a new simple native helloworld app
-  ```js
+```js
 app.ChooseFile('tar','application/x-tar',fp=>
 {
   if(!confirm('Do you trust this tar file?')) return;
@@ -26,4 +26,4 @@ app.ChooseFile('tar','application/x-tar',fp=>
   alert(result) ;
 }) ;
 // 安裝到DroidScript  Install App to DroidScript
-  ```
+```
