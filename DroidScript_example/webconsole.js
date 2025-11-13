@@ -254,7 +254,9 @@ export function OnConfig()
 
 function onkeyQ()
 {
-  globalThis.lay.Show();
+  if(confirm('Reload?'))
+    web2.Reload();
+  //globalThis.lay.Show();
 }
 
 function web2_OnProgess( progress )
