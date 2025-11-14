@@ -28,12 +28,12 @@ if(typeof(app)=='undefined')
 var spstate={ctrl:false,shift:false,alt:false};
 
 var btn1gen={
-  "Tab\nshift":["TAB","shift"],
+  "Tab\nshf":["TAB","shift"],
   "Esc\nq":["ESCAPE","^Q"],
-  "Save\nd":[   "^S",     "^D"],
-  "Find\nn" :[   "^F",     "^N"],
+  "^S\nd":[   "^S",     "^D"],
+  "^F\nn" :[   "^F",     "^N"],
   "↑\ntop":  [ "DPAD_UP","^MOVE_HOME" ],
-  "Undo\ny":[  "^Z",    "^Y"],
+  "^Z\ny":[  "^Z",    "^Y"],
   "PGU":      [ "PAGE_UP",    "MOVE_HOME"]
 };
 
