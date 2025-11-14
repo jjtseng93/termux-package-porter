@@ -78,6 +78,9 @@ export async function startWebconsole()
      
      btnQ=app.CreateButton( "q" )
      btnQ.SetOnTouch( onkeyQ )
+     btnQ.SetOnLongTouch(function(){
+     	web2.Execute(prompt('execute in webview'));
+     })
      btnQ.SetBackColor( 'red' )
      //btnQ.SetOnLongTouch( smkeyQc )
      
