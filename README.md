@@ -1,7 +1,14 @@
 # Termux-Package-Porter
 - Ports termux packages to other Android shells by libtree and zip
 # Update Note 
-## 2025/11/13(latest)
+## 2025/11/16(latest)
+- 'run' is now aliased to $PKG_PDIR/no_backup/r
+- so one can run micro by: run micro filename
+- In sh/bash I've set alias in ~/.bashrc
+- In fish you'll have to run: sh $shr micro filename
+- added llama-cli package
+- shizuku can now be run by simply: run rish
+## 2025/11/13
 - I've made a new tmpk_firstrun.sh to fit all needs
 - now just copy your tmpk.zip and tmpk_firstrun.sh to any same folder(/data/data/pkn /sdcard/Android/media/pkn Termux $HOME)
 - sh /path/to/tmpk_firstrun.sh
