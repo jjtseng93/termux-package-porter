@@ -23,5 +23,14 @@
   vncserver :1
 
   # run the real functional vnc server
-  Xvnc :1 -auth /root/.Xauthority -desktop localhost:1_alpine_root -fp /usr/share/fonts/100dpi -geometry 1280x720 -rfbauth /root/.vnc/passwd -rfbport 5901 -nolock
+  Xvnc :1 -auth /root/.Xauthority -desktop localhost:1_alpine_root -fp /usr/share/fonts/100dpi -geometry 1280x720 -rfbauth /root/.vnc/passwd -rfbport 5901 -nolock &
+
+  export DISPLAY=:1
+
+  # run a custom desktop environment
+  fluxbox &
+
+  # run a terminal emulator as an app launcher if needed
+  konsole
+  
   ```
