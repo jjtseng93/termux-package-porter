@@ -54,7 +54,7 @@
 - Then you can either 
 1. unzip this whole folder to /data/data/package_name and then rename tmpk to no_backup
   (due to these folders being too large, if you want to use this method,
-  unzip them manually: lxt  micro  nd  qarm  qemu-img)
+  unzip them manually: lxt  micro  nd  qarm  qemu-img sing-box)
 - *** this method is currently unstable: it requires you to also unzip the files to media_dir ***
   ```shell
   cd /data/data/package_name
