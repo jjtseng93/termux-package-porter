@@ -5,6 +5,7 @@
   sh rpr.sh
   ```
 - some patches might need to be applied and are listed in the patch folder
+- also look at playing audio instructions at pulseaudio/README.md
 # How to extract proot-alpine.tar 
 - as a folder named pd
   ```shell
@@ -18,6 +19,7 @@
 # How to run vnc server in proot alpine
   ```shell
   echo "yourpassword" | vncpasswd -f > ~/.vnc/passwd
+  chmod 600 ~/.vnc/passwd
 
   # let it fail to generate .Xauthority
   vncserver :1
