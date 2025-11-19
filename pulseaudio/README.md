@@ -1,4 +1,17 @@
-# Playing audio from proot to Android native Chrome
+# Playing audio to native Android directly
+## 1. Start pulseaudio server
+- just start a pulseaudio server at the guest app
+- running bash with the module sles sink
+- the $shr refers to /data/data/package_name/no_backup/r
+- assuming you have already ran tmpk_firstrun.sh in advance and started bash
+  ```shell
+  sh $shr pulseaudio --start --exit-idle-time=-1 --daemonize --load="module-native-protocol-tcp auth-anonymous=1" --load="module-sles-sink rate=48000"
+  ```
+## 2. Client proot alpine
+- export PULSE_SERVER=127.0.0.1
+- and the audio will play automatically
+
+# (deprecated) Playing audio from proot to Android native Chrome
 - requires 3 steps: pulse server, ffmpeg porting, Android Chrome
 ## Pulseaudio server
 - first start pulseaudio server at the guest app running bash
