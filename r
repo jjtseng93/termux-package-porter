@@ -9,6 +9,11 @@ elif [ -f "$sd/../getpkn.sh" ] ; then
   . $sd/../getpkn.sh
 fi
 
+if [ "$1" = "-p" ] ; then
+  export TMPK_PRELOAD_EXECVE=1
+  shift
+fi
+
 export comesfromr=1
 
 if [ -f $sd/gruntm.sh ] ; then

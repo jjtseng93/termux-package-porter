@@ -1,7 +1,15 @@
 # Termux-Package-Porter
 - Ports termux packages to other Android shells by libtree and zip
 # Update Note
-## 2025/11/19(latest)
+## 2025/11/22(latest)
+- Added preload execve function
+- so that you can type micro hlw.sh directly
+- just simply do sh $shr -p bash
+- or export TMPK_PRELOAD_EXECVE=1
+- and execute the binary by sh $shr at least one time
+- then execute any .sh or ELF directly if put to PATH
+- Added $PKG_RDIR/bin to PATH
+## 2025/11/19
 - Big news: playing audio now with no delay!!
 - added playing audio from proot by pulseaudio
 - added vncserver and audio instructions for proot 

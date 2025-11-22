@@ -6,7 +6,7 @@
 if ! [ -z "$TMPK_QUIET" ] ; then
   exec > /dev/null 2>&1
 fi
-
+# echo "args: **$0**$1**$2**"
 scriptdir=$(dirname $(realpath "$0"))
 . $scriptdir/getpkn.sh 
 
@@ -32,10 +32,13 @@ export PKG_RDIR="$PKG_PDIR/no_backup"
 
 export shr="$PKG_PDIR/no_backup/r"
 
-if ! echo $HOME | grep no_backup ; then
+if ! echo $HOME | grep -q no_backup ; then
   export OPENSSL_CONF=/dev/null
 fi
 
+if ! echo $PATH | grep -q no_backup ; then
+  export PATH=$PATH:$PKG_RDIR/bin
+fi
 
 mkdir $PKG_PDIR/no_backup 2>/dev/null
 
@@ -54,6 +57,11 @@ fi
 export ENV="$HOME/.bashrc"
 export TERM=xterm-256color
 
+if ! [ -z "$TMPK_PRELOAD_EXECVE" ] ; then
+if [ -f "$PKG_RDIR/preload_execve.so" ] ; then
+  export LD_PRELOAD="$PKG_RDIR/preload_execve.so"
+fi
+fi
 
 if ! [ -f r ] ; then
 cp "/sdcard/Android/media/$package/r" . \
@@ -86,25 +94,38 @@ fi
 
 cd -
 
+
+if [ $(basename "$0") != 'gruntm.sh' ] ; then
+  comesfromr=1
+  set -- "$0" "$@"
+  # echo "**$0**$1**$2**$3**"
+fi
+
+fdn=$(basename "$1")
+
 if [ -z "$comesfromr" ] ; then
-  cd "$PKG_PDIR/no_backup/$1"
+  cd "$PKG_PDIR/no_backup/$fdn"
 fi
 
 if [ -z "$DISPLAY" ] ; then
   export DISPLAY=127.0.0.1:0
 fi
 
-fdn="$1"
+mkdir -p "$PKG_RDIR/bin" 2>/dev/null
+if ! [ -e "$PKG_RDIR/bin/$fdn" ] ; then
+  ln -s $(realpath "$0") "$PKG_RDIR/bin/$fdn"
+fi
+
 
 if [ -f $PKG_PDIR/no_backup/$fdn/$fdn ] ; then
-  elfn="$1"
+  elfn="$fdn"
 else
   elfn="$2"
 fi
 
 if [ -z $2 ] || 
    [ $elfn != $2 ]; then
-  elfn="$1"
+  elfn="$fdn"
   shift 1
 else
   shift 2
@@ -115,10 +136,13 @@ if ! [ -z "$TMPK_QUIET" ] ; then
 fi
 
 runpath="$PKG_PDIR/no_backup/$fdn/$elfn"
+ftype=$(file -b "$runpath")
 
-if file -b "$runpath" | grep -q "script" ; then
-  sh "$runpath" "$@"
-else
+if echo "$ftype" | grep -q "script" ; then
+  exec sh "$runpath" "$@"
+elif echo "$ftype" | grep -q "ELF" ; then
   export LD_LIBRARY_PATH="$PKG_PDIR/no_backup/$fdn"
-  /system/bin/linker64 "$runpath" "$@"
+  exec /system/bin/linker64 "$runpath" "$@"
+else
+  echo "Wrong file type: $runpath $ftype"
 fi
